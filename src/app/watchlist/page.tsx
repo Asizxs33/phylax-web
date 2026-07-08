@@ -17,7 +17,6 @@ export default function WatchlistPage() {
 
   useEffect(() => {
     let cancelled = false;
-    setEntries(null);
     fetch(`/api/registry?min_score=${minScore}`)
       .then(async (res) => {
         const payload = await res.json();
@@ -53,7 +52,10 @@ export default function WatchlistPage() {
                 {[0, 30, 60].map((s) => (
                   <button
                     key={s}
-                    onClick={() => setMinScore(s)}
+                    onClick={() => {
+                      setEntries(null);
+                      setMinScore(s);
+                    }}
                     className={`rounded-full border px-3 py-1 font-mono text-xs transition ${
                       minScore === s
                         ? "border-accent bg-accent text-bg"

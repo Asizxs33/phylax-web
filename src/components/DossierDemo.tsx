@@ -14,48 +14,52 @@ const SCORE = 82;
 const STAMP_STEP = LINES.length + 1;
 const CYCLE_MS = 12000;
 
+const prefersReducedMotion = () =>
+  typeof window !== "undefined" && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
 export function DossierDemo() {
-  const [cycle, setCycle] = useState(0);
-  const [step, setStep] = useState(0);
-  const [score, setScore] = useState(0);
+  const [step, setStep] = useState(() => (prefersReducedMotion() ? STAMP_STEP : 0));
+  const [score, setScore] = useState(() => (prefersReducedMotion() ? SCORE : 0));
 
   useEffect(() => {
-    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
-      setStep(STAMP_STEP);
-      setScore(SCORE);
-      return;
-    }
+    if (prefersReducedMotion()) return;
 
     let alive = true;
-    const timers: ReturnType<typeof setTimeout>[] = [];
-    setStep(0);
-    setScore(0);
+    let timers: ReturnType<typeof setTimeout>[] = [];
 
-    LINES.forEach((_, i) =>
-      timers.push(setTimeout(() => alive && setStep(i + 1), 800 + i * 900))
-    );
+    const runCycle = () => {
+      timers = [];
+      setStep(0);
+      setScore(0);
 
-    const scoreAt = 800 + LINES.length * 900;
-    timers.push(
-      setTimeout(() => {
-        const t0 = performance.now();
-        const tick = (t: number) => {
-          if (!alive) return;
-          const p = Math.min(1, (t - t0) / 1200);
-          setScore(Math.round(SCORE * (1 - Math.pow(1 - p, 3))));
-          if (p < 1) requestAnimationFrame(tick);
-        };
-        requestAnimationFrame(tick);
-      }, scoreAt)
-    );
-    timers.push(setTimeout(() => alive && setStep(STAMP_STEP), scoreAt + 1400));
-    timers.push(setTimeout(() => alive && setCycle((c) => c + 1), CYCLE_MS));
+      LINES.forEach((_, i) =>
+        timers.push(setTimeout(() => alive && setStep(i + 1), 800 + i * 900))
+      );
+
+      const scoreAt = 800 + LINES.length * 900;
+      timers.push(
+        setTimeout(() => {
+          const t0 = performance.now();
+          const tick = (t: number) => {
+            if (!alive) return;
+            const p = Math.min(1, (t - t0) / 1200);
+            setScore(Math.round(SCORE * (1 - Math.pow(1 - p, 3))));
+            if (p < 1) requestAnimationFrame(tick);
+          };
+          requestAnimationFrame(tick);
+        }, scoreAt)
+      );
+      timers.push(setTimeout(() => alive && setStep(STAMP_STEP), scoreAt + 1400));
+      timers.push(setTimeout(() => alive && runCycle(), CYCLE_MS));
+    };
+
+    runCycle();
 
     return () => {
       alive = false;
       timers.forEach(clearTimeout);
     };
-  }, [cycle]);
+  }, []);
 
   const done = step >= STAMP_STEP;
 
