@@ -1,26 +1,394 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --bg: #faf6ef;
+  --bg-elevated: #fdfbf7;
+  --bg-card: #ffffff;
+  --ink: #2a241c;
+  --ink-muted: #746b5e;
+  --ink-faint: #ab9f8e;
+  --accent: #c8783a;
+  --accent-bright: #a8592a;
+  --accent-soft: #e8b98a;
+  --danger: #b8493f;
+  --safe: #3d8a5f;
+  --border: #ece4d6;
+  --border-strong: #ddd0ba;
 }
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --color-bg: var(--bg);
+  --color-bg-elevated: var(--bg-elevated);
+  --color-bg-card: var(--bg-card);
+  --color-ink: var(--ink);
+  --color-ink-muted: var(--ink-muted);
+  --color-ink-faint: var(--ink-faint);
+  --color-accent: var(--accent);
+  --color-accent-bright: var(--accent-bright);
+  --color-accent-soft: var(--accent-soft);
+  --color-danger: var(--danger);
+  --color-safe: var(--safe);
+  --color-border: var(--border);
+  --color-border-strong: var(--border-strong);
+  --font-display: var(--font-fraunces);
+  --font-body: var(--font-work-sans);
+  --font-mono: var(--font-space-mono);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+* {
+  border-color: var(--border);
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+::selection {
+  background: rgba(200, 120, 58, 0.22);
+  color: var(--ink);
+}
+
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--border-strong) transparent;
+}
+*::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+*::-webkit-scrollbar-thumb {
+  background: var(--border-strong);
+  border-radius: 8px;
+}
+*::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+h1,
+h2,
+h3 {
+  text-wrap: balance;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--font-body), system-ui, sans-serif;
+  position: relative;
+}
+
+/* very faint paper grain — texture, not noise */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: 999;
+  pointer-events: none;
+  opacity: 0.02;
+  mix-blend-mode: multiply;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+/* soft organic color field — the calm equivalent of the old grid/radar backdrop.
+   Three overlapping, slowly drifting blobs in saturated clay/rust/gold tones
+   so the page reads as alive rather than a flat tint. */
+.blob-field {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  overflow: hidden;
+  background: var(--bg);
+}
+.blob-field::before,
+.blob-field::after {
+  content: "";
+  position: absolute;
+  border-radius: 9999px;
+  filter: blur(80px);
+  opacity: 0.6;
+}
+.blob-field::before {
+  top: -22%;
+  right: -14%;
+  height: 680px;
+  width: 680px;
+  background: radial-gradient(circle, #e2954e 0%, #eec397 55%, transparent 75%);
+  animation: blob-drift-a 22s ease-in-out infinite;
+}
+.blob-field::after {
+  bottom: -26%;
+  left: -16%;
+  height: 620px;
+  width: 620px;
+  background: radial-gradient(circle, #c9633a 0%, #eab27e 55%, transparent 75%);
+  opacity: 0.42;
+  animation: blob-drift-b 26s ease-in-out infinite;
+}
+.blob-field-spot {
+  position: absolute;
+  top: 30%;
+  left: 46%;
+  height: 480px;
+  width: 480px;
+  border-radius: 9999px;
+  filter: blur(90px);
+  opacity: 0.3;
+  background: radial-gradient(circle, #f3d9a8, transparent 72%);
+  animation: blob-drift-c 30s ease-in-out infinite;
+}
+
+@keyframes blob-drift-a {
+  0%,
+  100% {
+    transform: translate(0, 0) scale(1);
+  }
+  50% {
+    transform: translate(-4%, 5%) scale(1.08);
+  }
+}
+@keyframes blob-drift-b {
+  0%,
+  100% {
+    transform: translate(0, 0) scale(1);
+  }
+  50% {
+    transform: translate(5%, -4%) scale(1.05);
+  }
+}
+@keyframes blob-drift-c {
+  0%,
+  100% {
+    transform: translate(-50%, -50%) scale(1);
+  }
+  50% {
+    transform: translate(-46%, -54%) scale(1.15);
+  }
+}
+
+/* dark contrast section — the "wow" beat between paper-toned sections */
+.section-ink {
+  --ink: #f4ece0;
+  --border: rgba(244, 236, 224, 0.14);
+  background: #211a12;
+  color: #f4ece0;
+}
+.section-ink .text-gradient {
+  background: linear-gradient(180deg, #f4ece0 0%, #f4ece0 55%, var(--accent-soft) 130%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+}
+
+.tracked {
+  letter-spacing: 0.14em;
+}
+
+/* soft card elevation — blurred, low-contrast, no hard offset lines */
+.soft-shadow {
+  box-shadow: 0 1px 2px rgba(42, 36, 28, 0.04), 0 12px 32px -16px rgba(42, 36, 28, 0.14);
+}
+
+.card-lift {
+  transition: box-shadow 0.3s ease, transform 0.3s ease, border-color 0.3s ease;
+}
+.card-lift:hover {
+  box-shadow: 0 4px 8px rgba(42, 36, 28, 0.05), 0 20px 40px -18px rgba(42, 36, 28, 0.18);
+  transform: translateY(-3px);
+  border-color: var(--border-strong);
+}
+
+/* compatibility layer for secondary/tool screens that still want a bit more
+   technical texture than the calm marketing pages — softened versions of
+   the old "intelligence dossier" utilities, no hard offset shadows. */
+.stamped,
+.stamped-accent {
+  box-shadow: 0 1px 2px rgba(42, 36, 28, 0.04), 0 10px 24px -14px rgba(42, 36, 28, 0.16);
+}
+.stamped-press {
+  transition: box-shadow 0.2s ease, transform 0.2s ease;
+}
+.stamped-press:hover {
+  transform: translateY(-1px);
+}
+
+.corner-frame {
+  position: relative;
+}
+.corner-frame::before,
+.corner-frame::after {
+  content: "";
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  border-color: var(--accent);
+  opacity: 0.5;
+}
+.corner-frame::before {
+  top: -1px;
+  left: -1px;
+  border-top: 1px solid;
+  border-left: 1px solid;
+}
+.corner-frame::after {
+  top: -1px;
+  right: -1px;
+  border-top: 1px solid;
+  border-right: 1px solid;
+}
+
+.card-label {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding-bottom: 0.625rem;
+  margin-bottom: 0.875rem;
+  border-bottom: 1px solid var(--border);
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--ink-faint);
+}
+
+/* gentle rotating sweep for the investigate graph stage only */
+@keyframes radar-sweep {
+  to {
+    transform: rotate(360deg);
+  }
+}
+.radar-sweep {
+  background: conic-gradient(
+    from 0deg,
+    transparent 0deg,
+    transparent 320deg,
+    rgba(200, 120, 58, 0.16) 359deg,
+    transparent 360deg
+  );
+  animation: radar-sweep 8s linear infinite;
+  border-radius: 9999px;
+}
+
+/* underline-style input */
+.input-underline {
+  border: none;
+  border-bottom: 1.5px solid var(--border-strong);
+  border-radius: 0;
+  background: transparent;
+  transition: border-color 0.2s;
+}
+.input-underline:focus {
+  outline: none;
+  border-color: var(--accent);
+}
+
+@keyframes reveal {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.reveal {
+  animation: reveal 0.8s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+/* RevealManager: pause .reveal until scrolled into view */
+html.js-reveal .reveal {
+  animation-play-state: paused;
+}
+html.js-reveal .reveal.in-view {
+  animation-play-state: running;
+}
+
+@keyframes pulse-slow {
+  0%,
+  100% {
+    opacity: 0.45;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+.pulse-slow {
+  animation: pulse-slow 3.2s ease-in-out infinite;
+}
+
+/* horizontal marquee for the query ticker */
+@keyframes marquee {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+.marquee-track {
+  animation: marquee 38s linear infinite;
+}
+.marquee-mask:hover .marquee-track {
+  animation-play-state: paused;
+}
+.marquee-mask {
+  -webkit-mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
+  mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
+}
+
+/* accent gradient text */
+.text-gradient {
+  background: linear-gradient(180deg, var(--ink) 0%, var(--ink) 55%, var(--accent-bright) 130%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+}
+
+/* button shine sweep on hover */
+.btn-shine {
+  position: relative;
+  overflow: hidden;
+}
+.btn-shine::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  transform: translateX(-120%) skewX(-20deg);
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.35), transparent);
+  transition: transform 0.7s ease;
+}
+.btn-shine:hover::after {
+  transform: translateX(120%) skewX(-20deg);
+}
+
+@keyframes float-soft {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+.float-soft {
+  animation: float-soft 7s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .marquee-track,
+  .pulse-slow,
+  .float-soft,
+  .radar-sweep,
+  .blob-field::before,
+  .blob-field::after,
+  .blob-field-spot {
+    animation: none !important;
+  }
 }
