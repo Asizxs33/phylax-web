@@ -1,4 +1,5 @@
 import { RiskGauge } from "@/components/RiskGauge";
+import { SourceDonut } from "@/components/SourceDonut";
 import { ConnectorCard } from "@/components/ConnectorCard";
 import { QUERY_TYPE_LABELS, type InvestigateResponse } from "@/lib/types";
 
@@ -12,8 +13,15 @@ export function DossierBubble({ data }: { data: InvestigateResponse }) {
         ? "Есть отдельные сигналы. Рекомендую проверить первоисточники ниже."
         : "Явных сигналов по открытым источникам не видно — но это не гарантия.";
 
+  const caseFile = `PHX-${String(data.investigation_id).padStart(6, "0")}`;
+
   return (
     <div className="flex flex-col gap-4">
+      <div className="flex items-center justify-between">
+        <span className="font-mono text-[10px] uppercase tracked text-ink-faint">
+          Дело № {caseFile}
+        </span>
+      </div>
       <p className="text-sm leading-relaxed text-ink">
         Собрал досье по{" "}
         <span className="font-mono text-accent-bright">{data.query}</span> —
@@ -21,30 +29,38 @@ export function DossierBubble({ data }: { data: InvestigateResponse }) {
         {data.connectors_run.length} источников, ответили {okCount}. {verdict}
       </p>
 
-      <div className="flex flex-col items-center gap-5 rounded-2xl border border-border bg-bg-elevated/70 p-5 sm:flex-row sm:justify-between">
-        <RiskGauge score={data.risk_score} />
-        <div className="flex-1 text-sm">
-          {data.risk_flags.length > 0 ? (
-            <>
-              <p className="mb-2 font-mono text-[11px] uppercase tracked text-ink-faint">
-                Сработавшие сигналы
+      <div className="flex flex-col gap-5 rounded-2xl border border-border bg-bg-elevated/70 p-5">
+        <div className="flex flex-col items-center gap-5 sm:flex-row sm:justify-between">
+          <RiskGauge score={data.risk_score} />
+          <div className="flex-1 text-sm">
+            {data.risk_flags.length > 0 ? (
+              <>
+                <p className="mb-2 font-mono text-[11px] uppercase tracked text-ink-faint">
+                  Сработавшие сигналы
+                </p>
+                <div className="flex flex-wrap gap-1.5">
+                  {data.risk_flags.map((flag) => (
+                    <span
+                      key={flag}
+                      className="rounded-full bg-danger/10 px-2.5 py-1 font-mono text-[10px] uppercase tracked text-danger"
+                    >
+                      {flag}
+                    </span>
+                  ))}
+                </div>
+              </>
+            ) : (
+              <p className="text-ink-muted">
+                Ни одного red-flag маркера в ответах источников.
               </p>
-              <div className="flex flex-wrap gap-1.5">
-                {data.risk_flags.map((flag) => (
-                  <span
-                    key={flag}
-                    className="rounded-full bg-danger/10 px-2.5 py-1 font-mono text-[10px] uppercase tracked text-danger"
-                  >
-                    {flag}
-                  </span>
-                ))}
-              </div>
-            </>
-          ) : (
-            <p className="text-ink-muted">
-              Ни одного red-flag маркера в ответах источников.
-            </p>
-          )}
+            )}
+          </div>
+        </div>
+        <div className="border-t border-border pt-4">
+          <p className="mb-2.5 font-mono text-[11px] uppercase tracked text-ink-faint">
+            Состав источников
+          </p>
+          <SourceDonut results={data.results} />
         </div>
       </div>
 

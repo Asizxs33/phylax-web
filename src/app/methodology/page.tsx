@@ -5,8 +5,8 @@ import { Footer } from "@/components/Footer";
 import { PageHeader } from "@/components/PageHeader";
 
 export const metadata: Metadata = {
-  title: "Метод — Phylax",
-  description: "Как Phylax строит досье: конвейер источников, типы объектов, прозрачный risk score и маркеры финансовых пирамид.",
+  title: "Метод — SAQ",
+  description: "Как Aqyl строит досье: конвейер источников, типы объектов, прозрачный risk score и маркеры финансовых пирамид.",
 };
 
 const STAGES = [
@@ -66,7 +66,7 @@ export default function MethodologyPage() {
         <PageHeader
           index="01"
           eyebrow="Метод"
-          title="Как Phylax строит досье"
+          title="Как Aqyl строит досье"
           lead="Не чёрная коробка и не готовый вердикт: конвейер из пяти прозрачных стадий, где каждый вывод можно проследить до первоисточника."
         />
 

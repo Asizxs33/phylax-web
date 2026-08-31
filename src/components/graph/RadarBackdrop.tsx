@@ -5,7 +5,7 @@ export function RadarBackdrop() {
       <div
         className="absolute left-1/2 top-1/2 h-[900px] w-[900px] -translate-x-1/2 -translate-y-1/2"
         style={{
-          background: "radial-gradient(circle, rgba(192,122,43,0.12), transparent 62%)",
+          background: "radial-gradient(circle, rgba(47,106,232,0.12), transparent 62%)",
         }}
       />
       {/* concentric rings */}
@@ -30,7 +30,7 @@ export function RadarBackdrop() {
       <div
         className="absolute inset-0"
         style={{
-          background: "radial-gradient(ellipse 70% 70% at 50% 50%, transparent 55%, rgba(33,29,23,0.06))",
+          background: "radial-gradient(ellipse 70% 70% at 50% 50%, transparent 55%, rgba(18,38,92,0.06))",
         }}
       />
     </div>

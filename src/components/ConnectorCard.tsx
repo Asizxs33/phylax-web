@@ -18,8 +18,10 @@ const SOURCE_LABELS: Record<string, string> = {
   blockchain_info_btc: "blockchain.info (BTC)",
   blockchair_multichain: "Blockchair",
   etherscan_eth: "Etherscan (ETH)",
+  chainabuse_scam_reports: "Chainabuse (скам-репорты)",
   username_enumeration: "Профили на платформах",
   telegram_public_preview: "Telegram (публичный превью)",
+  threat_actor_username_search: "Ник в утечках киберфорумов",
   onionclaw_darknet_search: "OnionClaw (даркнет)",
 };
 

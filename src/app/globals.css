@@ -1,20 +1,37 @@
 @import "tailwindcss";
 
 :root {
-  --bg: #faf6ef;
-  --bg-elevated: #fdfbf7;
+  --bg: #f2f6fe;
+  --bg-elevated: #f8fbff;
   --bg-card: #ffffff;
-  --ink: #2a241c;
-  --ink-muted: #746b5e;
-  --ink-faint: #ab9f8e;
-  --accent: #c8783a;
-  --accent-bright: #a8592a;
-  --accent-soft: #e8b98a;
-  --danger: #b8493f;
-  --safe: #3d8a5f;
-  --border: #ece4d6;
-  --border-strong: #ddd0ba;
+  --ink: #12265c;
+  --ink-muted: #4a5c88;
+  --ink-faint: #8b9ac2;
+  --accent: #2f6ae8;
+  --accent-bright: #1c50c9;
+  --accent-soft: #a9c4f7;
+  --danger: #d24a44;
+  --safe: #2e9e6b;
+  --border: #dde7f8;
+  --border-strong: #c3d4f0;
 }
+
+.dark {
+  --bg: #090e1c;
+  --bg-elevated: #0f172a;
+  --bg-card: #141f36;
+  --ink: #f1f5f9;
+  --ink-muted: #94a3b8;
+  --ink-faint: #64748b;
+  --accent: #3b82f6;
+  --accent-bright: #60a5fa;
+  --accent-soft: #1e3a8a;
+  --danger: #ef4444;
+  --safe: #10b981;
+  --border: #1e293b;
+  --border-strong: #334155;
+}
+
 
 @theme inline {
   --color-bg: var(--bg);
@@ -30,9 +47,9 @@
   --color-safe: var(--safe);
   --color-border: var(--border);
   --color-border-strong: var(--border-strong);
-  --font-display: var(--font-fraunces);
-  --font-body: var(--font-work-sans);
-  --font-mono: var(--font-space-mono);
+  --font-display: var(--font-nunito);
+  --font-body: var(--font-rubik);
+  --font-mono: var(--font-jetbrains);
 }
 
 * {
@@ -41,10 +58,11 @@
 
 html {
   scroll-behavior: smooth;
+  overflow-x: hidden;
 }
 
 ::selection {
-  background: rgba(200, 120, 58, 0.22);
+  background: rgba(47, 106, 232, 0.2);
   color: var(--ink);
 }
 
@@ -80,23 +98,15 @@ body {
   color: var(--ink);
   font-family: var(--font-body), system-ui, sans-serif;
   position: relative;
+  overflow-x: hidden;
 }
 
-/* very faint paper grain — texture, not noise */
-body::before {
-  content: "";
-  position: fixed;
-  inset: 0;
-  z-index: 999;
-  pointer-events: none;
-  opacity: 0.02;
-  mix-blend-mode: multiply;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+/* display font is rounded — give headings a touch more weight by default */
+.font-display {
+  font-weight: 800;
 }
 
-/* soft organic color field — the calm equivalent of the old grid/radar backdrop.
-   Three overlapping, slowly drifting blobs in saturated clay/rust/gold tones
-   so the page reads as alive rather than a flat tint. */
+/* soft sky field — three drifting blue blobs so the page reads as alive */
 .blob-field {
   position: fixed;
   inset: 0;
@@ -110,14 +120,14 @@ body::before {
   position: absolute;
   border-radius: 9999px;
   filter: blur(80px);
-  opacity: 0.6;
+  opacity: 0.55;
 }
 .blob-field::before {
   top: -22%;
   right: -14%;
   height: 680px;
   width: 680px;
-  background: radial-gradient(circle, #e2954e 0%, #eec397 55%, transparent 75%);
+  background: radial-gradient(circle, #6d9bf5 0%, #b9d2fb 55%, transparent 75%);
   animation: blob-drift-a 22s ease-in-out infinite;
 }
 .blob-field::after {
@@ -125,8 +135,8 @@ body::before {
   left: -16%;
   height: 620px;
   width: 620px;
-  background: radial-gradient(circle, #c9633a 0%, #eab27e 55%, transparent 75%);
-  opacity: 0.42;
+  background: radial-gradient(circle, #3f74ea 0%, #a5c3f8 55%, transparent 75%);
+  opacity: 0.34;
   animation: blob-drift-b 26s ease-in-out infinite;
 }
 .blob-field-spot {
@@ -138,7 +148,7 @@ body::before {
   border-radius: 9999px;
   filter: blur(90px);
   opacity: 0.3;
-  background: radial-gradient(circle, #f3d9a8, transparent 72%);
+  background: radial-gradient(circle, #cfe0fd, transparent 72%);
   animation: blob-drift-c 30s ease-in-out infinite;
 }
 
@@ -170,15 +180,15 @@ body::before {
   }
 }
 
-/* dark contrast section — the "wow" beat between paper-toned sections */
+/* dark contrast section — deep navy beat between airy blue sections */
 .section-ink {
-  --ink: #f4ece0;
-  --border: rgba(244, 236, 224, 0.14);
-  background: #211a12;
-  color: #f4ece0;
+  --ink: #eaf1ff;
+  --border: rgba(234, 241, 255, 0.14);
+  background: #0d1c46;
+  color: #eaf1ff;
 }
 .section-ink .text-gradient {
-  background: linear-gradient(180deg, #f4ece0 0%, #f4ece0 55%, var(--accent-soft) 130%);
+  background: linear-gradient(180deg, #eaf1ff 0%, #eaf1ff 55%, var(--accent-soft) 130%);
   -webkit-background-clip: text;
   background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -189,26 +199,28 @@ body::before {
   letter-spacing: 0.14em;
 }
 
-/* soft card elevation — blurred, low-contrast, no hard offset lines */
+/* soft card elevation — blurred, low-contrast, blue-tinted */
 .soft-shadow {
-  box-shadow: 0 1px 2px rgba(42, 36, 28, 0.04), 0 12px 32px -16px rgba(42, 36, 28, 0.14);
+  box-shadow: 0 1px 2px rgba(18, 38, 92, 0.04), 0 12px 32px -16px rgba(18, 38, 92, 0.16);
 }
 
 .card-lift {
   transition: box-shadow 0.3s ease, transform 0.3s ease, border-color 0.3s ease;
 }
 .card-lift:hover {
-  box-shadow: 0 4px 8px rgba(42, 36, 28, 0.05), 0 20px 40px -18px rgba(42, 36, 28, 0.18);
+  box-shadow:
+    0 4px 8px rgba(18, 38, 92, 0.05),
+    0 20px 40px -18px rgba(18, 38, 92, 0.2),
+    0 0 0 1px rgba(47, 106, 232, 0.25),
+    0 14px 40px -14px rgba(47, 106, 232, 0.35);
   transform: translateY(-3px);
-  border-color: var(--border-strong);
+  border-color: var(--accent-soft);
 }
 
-/* compatibility layer for secondary/tool screens that still want a bit more
-   technical texture than the calm marketing pages — softened versions of
-   the old "intelligence dossier" utilities, no hard offset shadows. */
+/* compatibility layer for secondary/tool screens */
 .stamped,
 .stamped-accent {
-  box-shadow: 0 1px 2px rgba(42, 36, 28, 0.04), 0 10px 24px -14px rgba(42, 36, 28, 0.16);
+  box-shadow: 0 1px 2px rgba(18, 38, 92, 0.04), 0 10px 24px -14px rgba(18, 38, 92, 0.18);
 }
 .stamped-press {
   transition: box-shadow 0.2s ease, transform 0.2s ease;
@@ -266,7 +278,7 @@ body::before {
     from 0deg,
     transparent 0deg,
     transparent 320deg,
-    rgba(200, 120, 58, 0.16) 359deg,
+    rgba(47, 106, 232, 0.16) 359deg,
     transparent 360deg
   );
   animation: radar-sweep 8s linear infinite;
@@ -338,8 +350,232 @@ html.js-reveal .reveal.in-view {
   animation-play-state: paused;
 }
 .marquee-mask {
+  overflow: hidden;
   -webkit-mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
   mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
+}
+
+/* ─── тёмный hero: орбита вокруг Aqyl ─────────────────── */
+
+@keyframes orbit-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+@keyframes orbit-unspin {
+  to {
+    transform: rotate(-360deg);
+  }
+}
+.orbit-ring {
+  position: absolute;
+  inset: 0;
+  animation: orbit-spin 26s linear infinite;
+}
+.orbit-counter {
+  animation: orbit-unspin 26s linear infinite;
+}
+
+/* пульсирующие круги радара */
+@keyframes ring-pulse {
+  0%,
+  100% {
+    opacity: 0.35;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.7;
+    transform: scale(1.03);
+  }
+}
+.ring-pulse {
+  animation: ring-pulse 4.5s ease-in-out infinite;
+}
+
+/* мерцающие «звёзды» на тёмном фоне */
+@keyframes star-twinkle {
+  0%,
+  100% {
+    opacity: 0.2;
+    transform: scale(0.8);
+  }
+  50% {
+    opacity: 0.9;
+    transform: scale(1.2);
+  }
+}
+.star-twinkle {
+  animation: star-twinkle 3.2s ease-in-out infinite;
+}
+
+/* побуквенное «падение» логотипа SAQ на загрузке */
+@keyframes letter-drop {
+  0% {
+    opacity: 0;
+    transform: translateY(-40px) scale(0.7) rotate(-6deg);
+  }
+  60% {
+    transform: translateY(6px) scale(1.04) rotate(1deg);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1) rotate(0);
+  }
+}
+.letter-drop {
+  display: inline-block;
+  animation: letter-drop 0.9s cubic-bezier(0.22, 1.4, 0.4, 1) both;
+}
+
+/* важно: при «уменьшить движение» анимация не проигрывается —
+   без этого буквы застревают на opacity:0 и логотип пропадает */
+@media (prefers-reduced-motion: reduce) {
+  .letter-drop {
+    animation: none !important;
+    opacity: 1 !important;
+    transform: none !important;
+  }
+}
+
+/* красивый дисплейный шрифт для логотипа SAQ */
+.font-wordmark {
+  font-family: var(--font-wordmark), var(--font-nunito), system-ui, sans-serif;
+}
+
+/* парящее кольцо-нимб под маскотом */
+@keyframes halo-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+.halo-ring {
+  animation: halo-spin 18s linear infinite;
+}
+
+/* «искры-сканеры», разлетающиеся от маскота */
+@keyframes spark-float {
+  0% {
+    opacity: 0;
+    transform: translateY(0) scale(0.4);
+  }
+  30% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(-46px) scale(1);
+  }
+}
+.spark {
+  animation: spark-float 3.4s ease-out infinite;
+}
+
+/* мигающий курсор командной строки */
+@keyframes caret-blink {
+  0%,
+  49% {
+    opacity: 1;
+  }
+  50%,
+  100% {
+    opacity: 0;
+  }
+}
+.caret-blink {
+  animation: caret-blink 1.05s step-end infinite;
+}
+
+/* «дышащее» свечение вокруг командной строки героя */
+@keyframes command-glow {
+  0%,
+  100% {
+    box-shadow:
+      0 1px 2px rgba(18, 38, 92, 0.05),
+      0 22px 60px -26px rgba(47, 106, 232, 0.5),
+      0 0 0 1px color-mix(in srgb, var(--accent) 12%, transparent);
+  }
+  50% {
+    box-shadow:
+      0 1px 2px rgba(18, 38, 92, 0.05),
+      0 26px 70px -24px rgba(47, 106, 232, 0.7),
+      0 0 0 1px color-mix(in srgb, var(--accent) 24%, transparent);
+  }
+}
+.command-glow {
+  animation: command-glow 4.5s ease-in-out infinite;
+}
+.command-glow:focus-within {
+  animation: none;
+  box-shadow:
+    0 1px 2px rgba(18, 38, 92, 0.05),
+    0 26px 70px -22px rgba(47, 106, 232, 0.75),
+    0 0 0 2px var(--accent);
+}
+
+/* подсвеченная лента глаголов: разделитель «мигает» бегущим огоньком */
+@keyframes verb-scan {
+  0%,
+  100% {
+    opacity: 0.25;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+.verb-dot {
+  animation: verb-scan 3s ease-in-out infinite;
+}
+
+/* монументальный заголовок: буквенный интервал чуть шире для «пульта» */
+.headline-mono {
+  font-variant-numeric: tabular-nums;
+}
+
+/* стрелка «листайте вниз» */
+@keyframes scroll-cue {
+  0%,
+  100% {
+    transform: translateY(0);
+    opacity: 0.5;
+  }
+  50% {
+    transform: translateY(7px);
+    opacity: 1;
+  }
+}
+.scroll-cue {
+  animation: scroll-cue 1.8s ease-in-out infinite;
+}
+
+/* светлая версия переливающегося градиента — для тёмного фона */
+.text-hero-gradient-dark {
+  background: linear-gradient(115deg, #ffffff 0%, #c9dbff 30%, #6d9bf5 50%, #e8f0ff 68%, #9db9f8 100%);
+  background-size: 220% 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+  animation: hero-shimmer 7s ease-in-out infinite;
+}
+
+/* живой градиент для главного заголовка — медленно переливается */
+@keyframes hero-shimmer {
+  0%,
+  100% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+}
+.text-hero-gradient {
+  background: linear-gradient(115deg, #12265c 0%, #1c50c9 30%, #2f6ae8 50%, #6d9bf5 68%, #1c50c9 100%);
+  background-size: 220% 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+  animation: hero-shimmer 7s ease-in-out infinite;
 }
 
 /* accent gradient text */
@@ -351,10 +587,21 @@ html.js-reveal .reveal.in-view {
   color: transparent;
 }
 
-/* button shine sweep on hover */
+/* button shine sweep on hover + объёмный градиент со свечением */
 .btn-shine {
   position: relative;
   overflow: hidden;
+  background-image: linear-gradient(135deg, #4a82f4 0%, #2f6ae8 45%, #1f52cf 100%);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.25),
+    0 10px 26px -10px rgba(47, 106, 232, 0.65);
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+.btn-shine:hover {
+  transform: translateY(-2px);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.25),
+    0 16px 34px -10px rgba(47, 106, 232, 0.75);
 }
 .btn-shine::after {
   content: "";
@@ -381,14 +628,471 @@ html.js-reveal .reveal.in-view {
   animation: float-soft 7s ease-in-out infinite;
 }
 
+/* mascot bob — a friendlier float for Aqyl */
+@keyframes aqyl-bob {
+  0%,
+  100% {
+    transform: translateY(0) rotate(-2deg);
+  }
+  50% {
+    transform: translateY(-8px) rotate(2deg);
+  }
+}
+.aqyl-bob {
+  animation: aqyl-bob 4.5s ease-in-out infinite;
+  transform-origin: 50% 80%;
+}
+
+/* ─── Aqyl: живой маскот ─────────────────────────────── */
+
+/* всё лицо мягко «дышит» — сразу видно, что маскот живой */
+@keyframes aqyl-breathe {
+  0%,
+  100% {
+    transform: translateY(0) scale(1);
+  }
+  50% {
+    transform: translateY(-0.8px) scale(1.03);
+  }
+}
+.aqyl-breathe {
+  transform-box: fill-box;
+  transform-origin: 50% 70%;
+  animation: aqyl-breathe 2.6s ease-in-out infinite;
+}
+
+/* моргание */
+@keyframes aqyl-blink {
+  0%,
+  86%,
+  100% {
+    transform: scaleY(1);
+  }
+  90%,
+  93% {
+    transform: scaleY(0.08);
+  }
+  96% {
+    transform: scaleY(1);
+  }
+}
+.aqyl-eyes {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: aqyl-blink 3.4s ease-in-out infinite;
+}
+
+/* зрачки бегают — Aqyl сканирует источники */
+@keyframes aqyl-scan {
+  0%,
+  100% {
+    transform: translateX(-1.7px);
+  }
+  50% {
+    transform: translateX(1.7px);
+  }
+}
+.aqyl-scan {
+  animation: aqyl-scan 1.5s ease-in-out infinite;
+}
+
+/* уши подрагивают */
+@keyframes aqyl-wiggle {
+  0%,
+  74%,
+  100% {
+    transform: rotate(0deg);
+  }
+  80% {
+    transform: rotate(-12deg);
+  }
+  87% {
+    transform: rotate(8deg);
+  }
+  93% {
+    transform: rotate(-4deg);
+  }
+}
+.aqyl-ear {
+  transform-box: fill-box;
+  transform-origin: 50% 95%;
+  animation: aqyl-wiggle 4.2s ease-in-out infinite;
+}
+.aqyl-ear-r {
+  animation-delay: 0.35s;
+}
+
+/* «поп» при смене выражения лица */
+@keyframes aqyl-pop {
+  from {
+    transform: scale(0.55);
+  }
+  60% {
+    transform: scale(1.18);
+  }
+  to {
+    transform: scale(1);
+  }
+}
+.aqyl-pop {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: aqyl-pop 0.38s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+}
+
+/* зрачки следят за курсором (AqylLive пишет переменные) */
+.aqyl-look {
+  transform: translate(var(--aqyl-look-x, 0px), var(--aqyl-look-y, 0px));
+  transition: transform 0.18s ease-out;
+}
+
+/* искорки восторга / раздумий */
+@keyframes aqyl-sparkle {
+  0%,
+  100% {
+    opacity: 0.25;
+    transform: scale(0.8);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.15);
+  }
+}
+.aqyl-sparkle {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: aqyl-sparkle 1.6s ease-in-out infinite;
+}
+
+/* при reduced-motion гасим только крупные движения страницы;
+   микро-мимика маскота (моргание, дыхание, зрачки) остаётся —
+   она мала и не вызывает укачивания */
 @media (prefers-reduced-motion: reduce) {
   .marquee-track,
   .pulse-slow,
   .float-soft,
+  .aqyl-bob,
   .radar-sweep,
   .blob-field::before,
   .blob-field::after,
   .blob-field-spot {
     animation: none !important;
+  }
+}
+
+/* ─── DARK THEME OVERRIDES ─────────────────────────── */
+
+.dark .blob-field::before {
+  background: radial-gradient(circle, #1e3a8a 0%, #0f172a 55%, transparent 75%);
+  opacity: 0.45;
+}
+.dark .blob-field::after {
+  background: radial-gradient(circle, #2563eb 0%, #1d4ed8 55%, transparent 75%);
+  opacity: 0.18;
+}
+.dark .blob-field-spot {
+  background: radial-gradient(circle, #1e293b, transparent 72%);
+  opacity: 0.3;
+}
+.dark .text-hero-gradient {
+  /* use background-image (not the `background` shorthand) so background-clip:text
+     from the base rule is preserved — otherwise the wordmark renders transparent */
+  background-image: linear-gradient(115deg, #ffffff 0%, #a9c4f7 30%, #3b82f6 50%, #e8f0ff 68%, #9db9f8 100%);
+  background-size: 220% 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+.dark .soft-shadow {
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.4), 0 12px 32px -16px rgba(0, 0, 0, 0.7);
+}
+.dark .card-lift:hover {
+  box-shadow: 
+    0 4px 12px rgba(0, 0, 0, 0.5),
+    0 20px 40px -18px rgba(0, 0, 0, 0.8),
+    0 0 0 1px rgba(59, 130, 246, 0.25),
+    0 0 20px rgba(59, 130, 246, 0.15);
+  border-color: rgba(59, 130, 246, 0.35);
+}
+.dark .stamped {
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.4), 0 10px 24px -14px rgba(0, 0, 0, 0.7);
+}
+.dark ::selection {
+  background: rgba(59, 130, 246, 0.3);
+  color: #ffffff;
+}
+
+.cyber-grid {
+  background-image: radial-gradient(var(--border-strong) 1px, transparent 1px);
+  background-size: 24px 24px;
+  mask-image: linear-gradient(to bottom, #000 65%, transparent 100%);
+  -webkit-mask-image: linear-gradient(to bottom, #000 65%, transparent 100%);
+}
+
+/* ─── новый герой: «live threat deck» ─────────────────── */
+
+/* фон-меш: слоистые радиальные свечения сигнальных цветов */
+.hero-mesh {
+  background:
+    radial-gradient(ellipse 42% 55% at 12% 8%, color-mix(in srgb, var(--accent) 26%, transparent), transparent 60%),
+    radial-gradient(ellipse 40% 50% at 88% 18%, color-mix(in srgb, var(--danger) 16%, transparent), transparent 62%),
+    radial-gradient(ellipse 50% 45% at 70% 96%, color-mix(in srgb, var(--accent-bright) 20%, transparent), transparent 66%);
+}
+
+/* тонкая линейная сетка «пульта» */
+.hero-lines {
+  background-image:
+    linear-gradient(to right, color-mix(in srgb, var(--border-strong) 55%, transparent) 1px, transparent 1px),
+    linear-gradient(to bottom, color-mix(in srgb, var(--border-strong) 55%, transparent) 1px, transparent 1px);
+  background-size: 64px 64px;
+  mask-image: radial-gradient(ellipse 80% 70% at 50% 40%, #000 30%, transparent 78%);
+  -webkit-mask-image: radial-gradient(ellipse 80% 70% at 50% 40%, #000 30%, transparent 78%);
+}
+
+/* зернистость поверх — «плёнка», чтобы фон не был плоским */
+.hero-grain::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0.5;
+  mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+/* парящие сигнальные «чипы» вокруг досье */
+@keyframes chip-float {
+  0%, 100% { transform: translateY(0) rotate(var(--rot, 0deg)); }
+  50% { transform: translateY(-9px) rotate(var(--rot, 0deg)); }
+}
+.chip-float {
+  animation: chip-float 5.5s ease-in-out infinite;
+}
+
+/* большой контурный подзаголовок под именем */
+.hero-underline-kaz {
+  letter-spacing: 0.42em;
+}
+
+/* ─── большой живой Aqyl в герое: набор разных движений ─── */
+
+/* мягкое покачивание корпусом + наклон */
+@keyframes aqyl-sway {
+  0%, 100% { transform: translateY(0) rotate(-3deg); }
+  25% { transform: translateY(-6px) rotate(2deg); }
+  50% { transform: translateY(-2px) rotate(3deg); }
+  75% { transform: translateY(-8px) rotate(-1deg); }
+}
+.aqyl-sway {
+  animation: aqyl-sway 6s ease-in-out infinite;
+  transform-origin: 50% 85%;
+}
+
+/* периодический «прыжок» с приземлением-сжатием */
+@keyframes aqyl-hop {
+  0%, 62%, 100% { transform: translateY(0) scaleY(1); }
+  68% { transform: translateY(0) scaleY(0.9) scaleX(1.06); }   /* приседание */
+  80% { transform: translateY(-34px) scaleY(1.08) scaleX(0.96); } /* взлёт */
+  90% { transform: translateY(0) scaleY(0.92) scaleX(1.05); }  /* приземление */
+  95% { transform: translateY(0) scaleY(1.02); }
+}
+.aqyl-hop {
+  animation: aqyl-hop 4.5s cubic-bezier(0.3, 0.7, 0.4, 1) infinite;
+  transform-origin: 50% 100%;
+}
+
+/* вращающийся пунктирный радар-нимб вокруг большого Aqyl */
+@keyframes aqyl-orbit {
+  to { transform: rotate(360deg); }
+}
+.aqyl-orbit {
+  animation: aqyl-orbit 14s linear infinite;
+}
+
+/* маленькие спутники, вращающиеся по орбите */
+.aqyl-orbit-dot {
+  position: absolute;
+  height: 10px;
+  width: 10px;
+  border-radius: 9999px;
+  background: var(--accent);
+  box-shadow: 0 0 12px color-mix(in srgb, var(--accent) 70%, transparent);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .aqyl-sway, .aqyl-hop, .aqyl-orbit { animation: none !important; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .chip-float { animation: none !important; }
+}
+
+/* ─── polish pass: decorative section furniture ─────── */
+
+/* soft ambient glow blobs behind a section — pair with position:relative */
+.section-glow {
+  position: relative;
+  isolation: isolate;
+}
+.section-glow::before {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  inset: -10% -10% auto -10%;
+  height: 60%;
+  pointer-events: none;
+  background: radial-gradient(ellipse 50% 100% at 50% 0%, rgba(47, 106, 232, 0.1), transparent 70%);
+}
+
+/* gradient icon badge — used for step numbers / pillar icons */
+.icon-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 9999px;
+  background: linear-gradient(150deg, var(--accent) 0%, var(--accent-bright) 100%);
+  color: #fff;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.3),
+    0 8px 20px -8px rgba(47, 106, 232, 0.55);
+}
+
+/* small pulsing accent dot next to section eyebrows */
+@keyframes eyebrow-dot {
+  0%,
+  100% {
+    box-shadow: 0 0 0 0 rgba(47, 106, 232, 0.5);
+  }
+  50% {
+    box-shadow: 0 0 0 4px rgba(47, 106, 232, 0);
+  }
+}
+.eyebrow-dot {
+  animation: eyebrow-dot 2.2s ease-in-out infinite;
+}
+
+/* dashed connector line between timeline steps (desktop only) */
+.step-connector::after {
+  content: "";
+  position: absolute;
+  top: 26px;
+  left: 100%;
+  width: 1.5rem;
+  height: 1px;
+  background: repeating-linear-gradient(
+    90deg,
+    var(--border-strong) 0 6px,
+    transparent 6px 11px
+  );
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .eyebrow-dot {
+    animation: none !important;
+  }
+}
+
+
+/* ── Анимации кабинета (/dashboard, /admin) ───────────────────────────
+   Отдельно от .reveal: тот ставится на паузу до попадания в вьюпорт
+   через RevealManager, а панели кабинета видны сразу при загрузке и
+   должны проявляться без ожидания скролла. */
+
+@keyframes panel-rise {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.panel-rise {
+  animation: panel-rise 0.5s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+/* линия графика прорисовывается слева направо */
+@keyframes chart-draw {
+  from {
+    stroke-dashoffset: var(--dash-len, 1200);
+  }
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+.chart-line {
+  stroke-dasharray: var(--dash-len, 1200);
+  animation: chart-draw 1.1s cubic-bezier(0.33, 1, 0.68, 1) 0.15s both;
+}
+
+/* заливка под линией проявляется после её отрисовки */
+@keyframes chart-fade {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.chart-area {
+  animation: chart-fade 0.7s ease-out 0.5s both;
+}
+
+/* столбцы вырастают от базовой линии */
+@keyframes bar-grow {
+  from {
+    transform: scaleY(0);
+  }
+  to {
+    transform: scaleY(1);
+  }
+}
+
+.bar-grow {
+  transform-origin: bottom;
+  animation: bar-grow 0.6s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+/* сегменты кольца риска дорисовываются по кругу */
+@keyframes donut-draw {
+  from {
+    stroke-dasharray: 0 var(--circ, 289);
+  }
+}
+
+.donut-seg {
+  animation: donut-draw 0.9s cubic-bezier(0.33, 1, 0.68, 1) 0.2s both;
+}
+
+/* полосы «частых сигналов» разъезжаются вправо */
+@keyframes bar-slide {
+  from {
+    transform: scaleX(0);
+  }
+  to {
+    transform: scaleX(1);
+  }
+}
+
+.bar-slide {
+  transform-origin: left;
+  animation: bar-slide 0.7s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .panel-rise,
+  .chart-line,
+  .chart-area,
+  .bar-grow,
+  .donut-seg,
+  .bar-slide {
+    animation: none !important;
+    opacity: 1 !important;
+    transform: none !important;
+    stroke-dasharray: none !important;
   }
 }

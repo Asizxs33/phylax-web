@@ -1,27 +1,34 @@
 import { SectionHeading } from "./HowItWorks";
+import { IconGlobe, IconNetwork, IconBank, IconCoin, IconUser, IconTor } from "./icons";
 
 const CATEGORIES = [
   {
+    Icon: IconGlobe,
     label: "Метапоиск",
     items: ["SearXNG", "DuckDuckGo"],
   },
   {
+    Icon: IconNetwork,
     label: "Домены и инфраструктура",
     items: ["crt.sh", "RDAP / WHOIS", "DNS", "urlscan.io", "Wayback Machine", "Common Crawl"],
   },
   {
+    Icon: IconBank,
     label: "Реестры и регуляторы",
     items: ["OpenCorporates", "SEC EDGAR", "Локальный blacklist регуляторов"],
   },
   {
+    Icon: IconCoin,
     label: "Криптовалюты",
     items: ["blockchain.info", "Blockchair", "Etherscan"],
   },
   {
+    Icon: IconUser,
     label: "Публичные соцсети",
     items: ["Username enumeration", "Telegram public preview"],
   },
   {
+    Icon: IconTor,
     label: "Даркнет",
     items: ["OnionClaw · 12 движков через Tor"],
     muted: true,
@@ -31,7 +38,7 @@ const CATEGORIES = [
 
 export function SourcesBoard() {
   return (
-    <section id="sources" className="px-6 py-28">
+    <section id="sources" className="section-glow px-6 py-28">
       <div className="mx-auto max-w-6xl">
         <SectionHeading
           eyebrow="Источники"
@@ -46,10 +53,15 @@ export function SourcesBoard() {
               className="reveal card-lift rounded-2xl border border-border bg-bg-card p-6"
               style={{ animationDelay: `${i * 70}ms` }}
             >
-              <div className="flex items-center justify-between gap-2">
-                <h3 className="text-sm font-medium text-ink">{cat.label}</h3>
+              <div className="flex items-start justify-between gap-2">
+                <div className="flex items-center gap-3">
+                  <span className={`icon-badge h-9 w-9 ${cat.muted ? "opacity-70 grayscale" : ""}`}>
+                    <cat.Icon className="h-[18px] w-[18px]" />
+                  </span>
+                  <h3 className="text-sm font-medium text-ink">{cat.label}</h3>
+                </div>
                 {cat.badge && (
-                  <span className="rounded-full bg-bg-elevated px-2.5 py-0.5 text-[11px] text-ink-faint">
+                  <span className="shrink-0 rounded-full bg-bg-elevated px-2.5 py-0.5 text-[11px] text-ink-faint">
                     {cat.badge}
                   </span>
                 )}

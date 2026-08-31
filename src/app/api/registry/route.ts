@@ -11,7 +11,7 @@ export async function GET(request: Request) {
     });
   } catch {
     return Response.json(
-      { error: `Не удалось достучаться до бэкенда Phylax по адресу ${BACKEND_URL}.` },
+      { error: `Не удалось достучаться до бэкенда SAQ по адресу ${BACKEND_URL}.` },
       { status: 502 }
     );
   }

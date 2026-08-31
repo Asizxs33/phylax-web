@@ -2,11 +2,11 @@ import type { Metadata } from "next";
 import { NavBar } from "@/components/NavBar";
 import { Footer } from "@/components/Footer";
 import { PageHeader } from "@/components/PageHeader";
-import { PhylaxMark } from "@/components/PhylaxMark";
+import { SaqMark } from "@/components/SaqMark";
 
 export const metadata: Metadata = {
-  title: "О проекте — Phylax",
-  description: "История, значение имени, этика и технологический стек платформы Phylax.",
+  title: "О проекте — SAQ",
+  description: "История, значение имени, этика и технологический стек платформы SAQ.",
 };
 
 const STACK = [
@@ -41,14 +41,14 @@ export default function AboutPage() {
           index="04"
           eyebrow="О проекте"
           title="Страж на границе доверия"
-          lead="Phylax появился из простой идеи: проверить незнакомый «инвест-проект» должно быть так же легко, как вбить его название в строку поиска."
+          lead="SAQ появился из простой идеи: проверить незнакомый «инвест-проект» должно быть так же легко, как вбить его название в строку поиска."
         />
 
         <section className="px-6 py-20">
           <div className="mx-auto grid max-w-5xl gap-12 lg:grid-cols-[1fr_1.4fr]">
             <div className="reveal">
               <div className="corner-frame flex flex-col items-center gap-5 rounded-2xl border border-border bg-bg-card/50 p-10 text-center">
-                <PhylaxMark className="h-20 w-20" glow />
+                <SaqMark className="h-20 w-20" glow />
                 <div>
                   <p className="font-display text-2xl">φύλαξ</p>
                   <p className="mt-1 font-mono text-xs uppercase tracked text-ink-faint">
@@ -70,7 +70,7 @@ export default function AboutPage() {
                 открыта — она просто разбросана по десяткам сервисов.
               </p>
               <p>
-                Phylax собирает эти разрозненные следы в одно место. Один
+                SAQ собирает эти разрозненные следы в одно место. Один
                 запрос — и реестры, блокчейн-эксплореры, архивы сайтов и
                 публичные соцсети опрашиваются параллельно, а результат
                 сводится в читаемое досье с прозрачным risk score.
@@ -112,7 +112,7 @@ export default function AboutPage() {
               ))}
             </div>
             <p className="mt-8 rounded-xl border border-border bg-bg-elevated/60 p-5 text-xs leading-relaxed text-ink-faint">
-              Phylax агрегирует только открытые публичные данные и не выдаёт
+              SAQ агрегирует только открытые публичные данные и не выдаёт
               юридических заключений. Результаты — основание для дальнейшей
               самостоятельной проверки, а не готовое обвинение. Ответственность
               за использование инструмента и соблюдение локального

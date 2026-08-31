@@ -15,7 +15,7 @@ export async function POST(request: Request) {
   } catch {
     return Response.json(
       {
-        error: `Не удалось достучаться до бэкенда Phylax по адресу ${BACKEND_URL}. Убедитесь, что FastAPI-сервер запущен (uvicorn app.main:app).`,
+        error: `Не удалось достучаться до бэкенда SAQ по адресу ${BACKEND_URL}. Убедитесь, что FastAPI-сервер запущен (uvicorn app.main:app).`,
       },
       { status: 502 }
     );

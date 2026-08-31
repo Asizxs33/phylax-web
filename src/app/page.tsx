@@ -1,6 +1,7 @@
 import { NavBar } from "@/components/NavBar";
 import { Hero } from "@/components/Hero";
 import { QueryTicker } from "@/components/QueryTicker";
+import { Ecosystem } from "@/components/Ecosystem";
 import { HowItWorks } from "@/components/HowItWorks";
 import { SourcesBoard } from "@/components/SourcesBoard";
 import { Principles } from "@/components/Principles";
@@ -14,6 +15,7 @@ export default function Home() {
       <main className="flex-1">
         <Hero />
         <QueryTicker />
+        <Ecosystem />
         <HowItWorks />
         <SourcesBoard />
         <Principles />

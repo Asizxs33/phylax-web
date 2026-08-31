@@ -23,6 +23,7 @@ export interface RecurrenceEntry {
 }
 
 export interface InvestigateResponse {
+  investigation_id: number;
   query: string;
   detected_type: QueryType;
   connectors_run: string[];

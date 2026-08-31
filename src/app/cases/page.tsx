@@ -5,8 +5,8 @@ import { Footer } from "@/components/Footer";
 import { PageHeader } from "@/components/PageHeader";
 
 export const metadata: Metadata = {
-  title: "Кейсы — Phylax",
-  description: "Иллюстративные сценарии: что вскрывает досье Phylax при проверке домена, кошелька и telegram-канала.",
+  title: "Кейсы — SAQ",
+  description: "Иллюстративные сценарии: что вскрывает досье SAQ при проверке домена, кошелька и telegram-канала.",
 };
 
 const CASES = [

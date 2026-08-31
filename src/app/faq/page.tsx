@@ -6,8 +6,8 @@ import { PageHeader } from "@/components/PageHeader";
 import { FaqAccordion } from "@/components/FaqAccordion";
 
 export const metadata: Metadata = {
-  title: "FAQ — Phylax",
-  description: "Частые вопросы о том, как работает Phylax, какие данные использует и где проходят его границы.",
+  title: "FAQ — SAQ",
+  description: "Частые вопросы о том, как работает SAQ, какие данные использует и где проходят его границы.",
 };
 
 export default function FaqPage() {

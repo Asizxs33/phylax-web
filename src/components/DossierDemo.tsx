@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { PhylaxMark } from "./PhylaxMark";
+import { AqylMark } from "./SaqMark";
 
 const LINES: [string, string][] = [
   ["whois", "домену 6 дней — при заявленных «5 лет»"],
@@ -18,11 +18,17 @@ const prefersReducedMotion = () =>
   typeof window !== "undefined" && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
 export function DossierDemo() {
-  const [step, setStep] = useState(() => (prefersReducedMotion() ? STAMP_STEP : 0));
-  const [score, setScore] = useState(() => (prefersReducedMotion() ? SCORE : 0));
+  const [mounted, setMounted] = useState(false);
+  const [step, setStep] = useState(0);
+  const [score, setScore] = useState(0);
 
   useEffect(() => {
-    if (prefersReducedMotion()) return;
+    setMounted(true);
+    if (prefersReducedMotion()) {
+      setStep(STAMP_STEP);
+      setScore(SCORE);
+      return;
+    }
 
     let alive = true;
     let timers: ReturnType<typeof setTimeout>[] = [];
@@ -61,14 +67,14 @@ export function DossierDemo() {
     };
   }, []);
 
-  const done = step >= STAMP_STEP;
+  const done = mounted && step >= STAMP_STEP;
 
   return (
     <div className="soft-shadow w-[320px] rounded-2xl border border-border bg-bg-card p-6">
       <div className="flex items-center justify-between border-b border-border pb-3">
         <div className="flex items-center gap-2">
-          <PhylaxMark className="h-4 w-4" />
-          <span className="text-xs uppercase tracked text-ink-faint">Phylax</span>
+          <AqylMark className="h-5 w-5" mood={done ? "alert" : "thinking"} />
+          <span className="text-xs uppercase tracked text-ink-faint">Aqyl</span>
         </div>
         <span className="flex items-center gap-1.5 text-[11px] text-ink-faint">
           <span className={`h-1.5 w-1.5 rounded-full ${done ? "bg-safe" : "bg-accent pulse-slow"}`} />
